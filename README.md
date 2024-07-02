@@ -16,5 +16,6 @@ https://sdkman.io/usage
 sdk env init
 
 sdk list java
-sdk install java
+sdk install java 17.0.11-tem
+sdk default java 17.0.11-tem
 ```
