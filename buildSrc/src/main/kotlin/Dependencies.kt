@@ -25,6 +25,11 @@ object Dependencies {
 
   val kotlin = listOf(
     "org.jetbrains.kotlin:kotlin-reflect",
+  )
+
+  val jackson = listOf(
+//    "com.fasterxml.jackson.core:jackson-databind:2.17.1",
+    "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.1",
     "com.fasterxml.jackson.module:jackson-module-kotlin",
   )
 }

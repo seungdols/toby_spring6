@@ -9,5 +9,5 @@ data class Payment(
   val foreignCurrencyAmount: BigDecimal,
   val exchangeRate: BigDecimal,
   val convertedAmount: BigDecimal,
-  val validUntil: LocalDateTime
+  val validUntil: LocalDateTime,
 )
