@@ -5,7 +5,7 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class PaymentService(
-  private val exRateProvider: ExRateProvider = WebApiExRateProvider(),
+  private val exRateProvider: ExRateProvider,
 ) {
   fun prepare(
     orderId: Long,
