@@ -9,8 +9,8 @@ import java.math.BigDecimal
 import java.net.HttpURLConnection
 import java.net.URL
 
-class WebApiExRatePaymentService : PaymentService() {
-  override fun getExRate(currency: String): BigDecimal {
+class WebApiExRateProvider {
+  fun getWebExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
     val url = URL("https://open.er-api.com/v6/latest/$currency")
     val httpURLConnection = url.openConnection() as HttpURLConnection
