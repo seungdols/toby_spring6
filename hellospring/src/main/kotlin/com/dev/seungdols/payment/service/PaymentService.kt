@@ -17,6 +17,14 @@ class PaymentService {
     currency: String,
     foreignCurrencyAmount: BigDecimal,
   ): Payment {
+    val exchangeRate = getExRate(currency)
+    val convertedAmount = foreignCurrencyAmount.multiply(exchangeRate)
+    val validUntil = LocalDateTime.now().plusMinutes(30)
+
+    return Payment(orderId, currency, foreignCurrencyAmount, exchangeRate, convertedAmount, validUntil)
+  }
+
+  private fun getExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
     val url = URL("https://open.er-api.com/v6/latest/$currency")
     val httpURLConnection = url.openConnection() as HttpURLConnection
@@ -32,10 +40,7 @@ class PaymentService {
     // 금액 계산
     val exchangeRate = exRateData.rates["KRW"]
     requireNotNull(exchangeRate) { "환율 정보가 없습니다." }
-    val convertedAmount = foreignCurrencyAmount.multiply(exchangeRate)
-    // 유효 시간 계산
-    val validUntil = LocalDateTime.now().plusMinutes(30)
-    return Payment(orderId, currency, foreignCurrencyAmount, exchangeRate, convertedAmount, validUntil)
+    return exchangeRate
   }
 }
 
