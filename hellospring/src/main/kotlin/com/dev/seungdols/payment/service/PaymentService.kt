@@ -5,14 +5,14 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class PaymentService(
-  private val webApiExRateProvider: WebApiExRateProvider = WebApiExRateProvider(),
+  private val exRateProvider: ExRateProvider = WebApiExRateProvider(),
 ) {
   fun prepare(
     orderId: Long,
     currency: String,
     foreignCurrencyAmount: BigDecimal,
   ): Payment {
-    val exchangeRate = webApiExRateProvider.getWebExRate(currency)
+    val exchangeRate = exRateProvider.getExRate(currency)
     val convertedAmount = foreignCurrencyAmount.multiply(exchangeRate)
     val validUntil = LocalDateTime.now().plusMinutes(30)
 

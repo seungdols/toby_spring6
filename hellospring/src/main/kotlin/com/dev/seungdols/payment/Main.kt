@@ -1,5 +1,6 @@
-package com.dev.seungdols.payment.service
+package com.dev.seungdols.payment
 
+import com.dev.seungdols.payment.service.PaymentService
 import java.math.BigDecimal
 
 fun main() {
