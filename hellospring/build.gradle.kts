@@ -1,6 +1,6 @@
 
 dependencies {
-//  implementation(Dependencies.spring)
+  implementation(Dependencies.spring)
   implementation(Dependencies.kotlin)
   implementation(Dependencies.jackson)
 //  implementation(Dependencies.h2)
