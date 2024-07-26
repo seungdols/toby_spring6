@@ -5,10 +5,12 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import org.springframework.stereotype.Component
 import java.math.BigDecimal
 import java.net.HttpURLConnection
 import java.net.URL
 
+@Component
 class WebApiExRateProvider : ExRateProvider {
   override fun getExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
