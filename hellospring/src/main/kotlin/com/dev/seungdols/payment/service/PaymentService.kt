@@ -1,11 +1,9 @@
 package com.dev.seungdols.payment.service
 
 import com.dev.seungdols.payment.vo.Payment
-import org.springframework.stereotype.Component
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@Component
 class PaymentService(
   private val exRateProvider: ExRateProvider,
 ) {

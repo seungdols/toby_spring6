@@ -5,13 +5,14 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import org.springframework.stereotype.Component
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.math.BigDecimal
 import java.net.HttpURLConnection
 import java.net.URL
 
-@Component
 class WebApiExRateProvider : ExRateProvider {
+  val log = KotlinLogging.logger {}
+
   override fun getExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
     val url = URL("https://open.er-api.com/v6/latest/$currency")
@@ -27,6 +28,9 @@ class WebApiExRateProvider : ExRateProvider {
       }.first()
     // 금액 계산
     val exchangeRate = exRateData.rates["KRW"]
+
+    log.info { "환율 정보: $exchangeRate" }
+
     requireNotNull(exchangeRate) { "환율 정보가 없습니다." }
     return exchangeRate
   }
