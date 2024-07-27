@@ -1,4 +1,4 @@
-package com.dev.seungdols.payment.vo
+package com.dev.seungdols.exrate.vo
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.math.BigDecimal

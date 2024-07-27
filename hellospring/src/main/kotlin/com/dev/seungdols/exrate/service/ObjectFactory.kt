@@ -1,5 +1,7 @@
-package com.dev.seungdols.payment.service
+package com.dev.seungdols.exrate.service
 
+import com.dev.seungdols.payment.service.ExRateProvider
+import com.dev.seungdols.payment.service.PaymentService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

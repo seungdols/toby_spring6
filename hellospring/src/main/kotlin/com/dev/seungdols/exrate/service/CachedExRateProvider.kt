@@ -1,5 +1,6 @@
-package com.dev.seungdols.payment.service
+package com.dev.seungdols.exrate.service
 
+import com.dev.seungdols.payment.service.ExRateProvider
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.math.BigDecimal
 import java.time.LocalDateTime

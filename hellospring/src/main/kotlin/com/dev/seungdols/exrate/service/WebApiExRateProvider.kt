@@ -1,6 +1,7 @@
-package com.dev.seungdols.payment.service
+package com.dev.seungdols.exrate.service
 
-import com.dev.seungdols.payment.vo.ExRateData
+import com.dev.seungdols.exrate.vo.ExRateData
+import com.dev.seungdols.payment.service.ExRateProvider
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper

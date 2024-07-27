@@ -1,5 +1,6 @@
-package com.dev.seungdols.payment.service
+package com.dev.seungdols.exrate.service
 
+import com.dev.seungdols.payment.service.ExRateProvider
 import java.math.BigDecimal
 
 class SimpleExRateProvider : ExRateProvider {
