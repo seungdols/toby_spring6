@@ -33,6 +33,17 @@ object Dependencies {
     "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.1",
     "com.fasterxml.jackson.module:jackson-module-kotlin",
   )
+
+  val kotest = listOf(
+    "io.kotest:kotest-assertions-core:5.6.2",
+    "io.kotest:kotest-runner",
+    "io.kotest:kotest-runner-junit5:5.6.2",
+  )
+
+  val springTest = listOf(
+    "org.springframework.boot:spring-boot-starter-test",
+    "io.kotest.extensions:kotest-extensions-spring:1.1.3",
+  )
 }
 
 fun DependencyHandler.api(dependencies: List<Any>) {
