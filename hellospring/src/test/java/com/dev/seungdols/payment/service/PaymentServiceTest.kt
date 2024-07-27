@@ -1,24 +1,26 @@
 package com.dev.seungdols.payment.service
 
-import com.dev.seungdols.exrate.service.WebApiExRateProvider
 import io.kotest.core.spec.style.AnnotationSpec
-import io.kotest.matchers.date.shouldBeAfter
-import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import java.math.BigDecimal
-import java.time.LocalDateTime
 
 class PaymentServiceTest : AnnotationSpec() {
   @Test
   fun prepare() {
-    val paymentService = PaymentService(WebApiExRateProvider())
+    testAmount(BigDecimal.valueOf(500), BigDecimal.valueOf(5_000))
+    testAmount(BigDecimal.valueOf(1_000), BigDecimal.valueOf(10_000))
+    testAmount(BigDecimal.valueOf(3_000), BigDecimal.valueOf(30_000))
+  }
+
+  private fun testAmount(
+    exRate: BigDecimal,
+    convertedAmount: BigDecimal,
+  ) {
+    val paymentService = PaymentService(ExRateProviderStub(exRate))
 
     val payment = paymentService.prepare(1L, "USD", BigDecimal.TEN)
 
-    payment.exchangeRate.shouldNotBeNull()
-
-    payment.convertedAmount shouldBe payment.exchangeRate.multiply(payment.foreignCurrencyAmount)
-
-    payment.validUntil.shouldBeAfter(LocalDateTime.now())
+    payment.exchangeRate shouldBe exRate
+    payment.convertedAmount shouldBe convertedAmount
   }
 }
