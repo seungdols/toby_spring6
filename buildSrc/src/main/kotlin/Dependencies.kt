@@ -25,6 +25,7 @@ object Dependencies {
 
   val kotlin = listOf(
     "org.jetbrains.kotlin:kotlin-reflect",
+    "io.github.oshai:kotlin-logging-jvm:5.1.4"
   )
 
   val jackson = listOf(
