@@ -4,12 +4,13 @@ import com.dev.seungdols.payment.service.ExRateProvider
 import com.dev.seungdols.payment.service.PaymentService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.time.Clock
 
 @Configuration
-class ObjectFactory {
+class PaymentConfig {
   @Bean
   fun paymentService(): PaymentService {
-    return PaymentService(cachedExRateProvider())
+    return PaymentService(cachedExRateProvider(), clock())
   }
 
   @Bean
@@ -20,5 +21,10 @@ class ObjectFactory {
   @Bean
   fun exRateProvider(): ExRateProvider {
     return WebApiExRateProvider()
+  }
+
+  @Bean
+  fun clock(): Clock {
+    return Clock.systemDefaultZone()
   }
 }
