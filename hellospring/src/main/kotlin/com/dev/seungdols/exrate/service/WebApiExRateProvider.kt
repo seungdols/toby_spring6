@@ -9,14 +9,14 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.math.BigDecimal
 import java.net.HttpURLConnection
-import java.net.URL
+import java.net.URI
 
 class WebApiExRateProvider : ExRateProvider {
-  val log = KotlinLogging.logger {}
+  private val log = KotlinLogging.logger {}
 
   override fun getExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
-    val url = URL("https://open.er-api.com/v6/latest/$currency")
+    val url = URI("https://open.er-api.com/v6/latest/$currency").toURL()
     val httpURLConnection = url.openConnection() as HttpURLConnection
     val exRateData =
       httpURLConnection.inputStream.bufferedReader().use {
