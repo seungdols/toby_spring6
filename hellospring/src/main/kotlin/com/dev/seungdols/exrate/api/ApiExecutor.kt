@@ -1,7 +1,7 @@
 package com.dev.seungdols.exrate.api
 
-import java.net.URL
+import java.net.URI
 
 interface ApiExecutor {
-  fun execute(url: URL): String
+  fun execute(uri: URI): String
 }
