@@ -1,5 +1,6 @@
 package com.dev.seungdols.exrate.service
 
+import com.dev.seungdols.exrate.api.SimpleApiExecutor
 import com.dev.seungdols.exrate.vo.ExRateData
 import com.dev.seungdols.payment.service.ExRateProvider
 import com.fasterxml.jackson.core.JsonProcessingException
@@ -10,10 +11,8 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.IOException
 import java.math.BigDecimal
-import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URISyntaxException
-import java.net.URL
 
 class WebApiExRateProvider : ExRateProvider {
   private val log = KotlinLogging.logger {}
@@ -37,7 +36,7 @@ class WebApiExRateProvider : ExRateProvider {
 
     val response =
       try {
-        executeApi(uri.toURL())
+        SimpleApiExecutor().execute(uri.toURL())
       } catch (e: IOException) {
         throw RuntimeException(e)
       }
@@ -55,13 +54,6 @@ class WebApiExRateProvider : ExRateProvider {
 
     requireNotNull(exchangeRate) { "환율 정보가 없습니다." }
     return exchangeRate
-  }
-
-  private fun executeApi(url: URL): String {
-    val httpURLConnection = url.openConnection() as HttpURLConnection
-    return httpURLConnection.inputStream.bufferedReader().use {
-      it.readLines().toString()
-    }
   }
 
   private fun extractExRate(response: String): ExRateData {
