@@ -1,14 +1,11 @@
 package com.dev.seungdols.exrate.service
 
 import com.dev.seungdols.exrate.api.ApiExecutor
+import com.dev.seungdols.exrate.api.ErApiExRateExtractor
+import com.dev.seungdols.exrate.api.ExRateExtractor
 import com.dev.seungdols.exrate.api.SimpleApiExecutor
-import com.dev.seungdols.exrate.vo.ExRateData
 import com.dev.seungdols.payment.service.ExRateProvider
 import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.IOException
 import java.math.BigDecimal
@@ -21,11 +18,12 @@ class WebApiExRateProvider : ExRateProvider {
   override fun getExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
     val url = "https://open.er-api.com/v6/latest/$currency"
-    return runApiForExRate(SimpleApiExecutor(), url, currency)
+    return runApiForExRate(SimpleApiExecutor(), ErApiExRateExtractor(), url, currency)
   }
 
   private fun runApiForExRate(
     apiExecutor: ApiExecutor,
+    exRateExtractor: ExRateExtractor,
     url: String,
     currency: String,
   ): BigDecimal {
@@ -43,25 +41,15 @@ class WebApiExRateProvider : ExRateProvider {
         throw RuntimeException(e)
       }
 
-    val exRateData =
+    val exchangeRate =
       try {
-        extractExRate(response)
+        exRateExtractor.extract(response, currency)
       } catch (e: JsonProcessingException) {
         throw RuntimeException(e)
       }
-    // 금액 계산
-    val exchangeRate = exRateData.rates[currency]
 
     log.info { "환율 정보: $exchangeRate" }
 
-    requireNotNull(exchangeRate) { "환율 정보가 없습니다." }
     return exchangeRate
-  }
-
-  private fun extractExRate(response: String): ExRateData {
-    val objectMapper = ObjectMapper()
-    objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    objectMapper.registerKotlinModule()
-    return objectMapper.readValue(response, object : TypeReference<List<ExRateData>>() {}).first()
   }
 }
