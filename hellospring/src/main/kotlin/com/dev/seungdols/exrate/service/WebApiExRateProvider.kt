@@ -1,5 +1,6 @@
 package com.dev.seungdols.exrate.service
 
+import com.dev.seungdols.exrate.api.ApiExecutor
 import com.dev.seungdols.exrate.api.SimpleApiExecutor
 import com.dev.seungdols.exrate.vo.ExRateData
 import com.dev.seungdols.payment.service.ExRateProvider
@@ -20,10 +21,11 @@ class WebApiExRateProvider : ExRateProvider {
   override fun getExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
     val url = "https://open.er-api.com/v6/latest/$currency"
-    return runApiForExRate(url, currency)
+    return runApiForExRate(SimpleApiExecutor(), url, currency)
   }
 
   private fun runApiForExRate(
+    apiExecutor: ApiExecutor,
     url: String,
     currency: String,
   ): BigDecimal {
@@ -36,7 +38,7 @@ class WebApiExRateProvider : ExRateProvider {
 
     val response =
       try {
-        SimpleApiExecutor().execute(uri.toURL())
+        apiExecutor.execute(uri.toURL())
       } catch (e: IOException) {
         throw RuntimeException(e)
       }
