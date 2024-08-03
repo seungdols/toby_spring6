@@ -1,5 +1,8 @@
 package com.dev.seungdols.exrate.service
 
+import com.dev.seungdols.exrate.api.ApiTemplate
+import com.dev.seungdols.exrate.api.ErApiExRateExtractor
+import com.dev.seungdols.exrate.api.HttpClientExecutor
 import com.dev.seungdols.payment.service.ExRateProvider
 import com.dev.seungdols.payment.service.PaymentService
 import org.springframework.context.annotation.Bean
@@ -19,8 +22,13 @@ class PaymentConfig {
   }
 
   @Bean
+  fun apiTemplate(): ApiTemplate {
+    return ApiTemplate(HttpClientExecutor(), ErApiExRateExtractor())
+  }
+
+  @Bean
   fun exRateProvider(): ExRateProvider {
-    return WebApiExRateProvider()
+    return WebApiExRateProvider(apiTemplate())
   }
 
   @Bean

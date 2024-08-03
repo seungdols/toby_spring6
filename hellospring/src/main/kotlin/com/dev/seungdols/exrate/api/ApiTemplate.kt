@@ -7,10 +7,31 @@ import java.math.BigDecimal
 import java.net.URI
 import java.net.URISyntaxException
 
-class ApiTemplate {
+class ApiTemplate(
+  private val apiExecutor: ApiExecutor,
+  private val exRateExtractor: ExRateExtractor,
+) {
   private val log = KotlinLogging.logger {}
 
-  fun getExRate(
+  fun getForExRate(url: String): BigDecimal {
+    return getForExRate(apiExecutor, exRateExtractor, url)
+  }
+
+  fun getForExRate(
+    apiExecutor: ApiExecutor,
+    url: String,
+  ): BigDecimal {
+    return getForExRate(apiExecutor, exRateExtractor, url)
+  }
+
+  fun getForExRate(
+    exRateExtractor: ExRateExtractor,
+    url: String,
+  ): BigDecimal {
+    return getForExRate(apiExecutor, exRateExtractor, url)
+  }
+
+  private fun getForExRate(
     apiExecutor: ApiExecutor,
     exRateExtractor: ExRateExtractor,
     url: String,

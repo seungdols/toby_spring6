@@ -1,17 +1,15 @@
 package com.dev.seungdols.exrate.service
 
 import com.dev.seungdols.exrate.api.ApiTemplate
-import com.dev.seungdols.exrate.api.ErApiExRateExtractor
-import com.dev.seungdols.exrate.api.HttpClientExecutor
 import com.dev.seungdols.payment.service.ExRateProvider
 import java.math.BigDecimal
 
-class WebApiExRateProvider : ExRateProvider {
+class WebApiExRateProvider(
+  private val apiTemplate: ApiTemplate,
+) : ExRateProvider {
   override fun getExRate(currency: String): BigDecimal {
     // 환율 가져오기 https://api.exchangerate-api.com/v4/latest/USD
     val url = "https://open.er-api.com/v6/latest/$currency"
-
-    val apiTemplate = ApiTemplate()
-    return apiTemplate.getExRate(HttpClientExecutor(), ErApiExRateExtractor(), url)
+    return apiTemplate.getForExRate(url)
   }
 }
