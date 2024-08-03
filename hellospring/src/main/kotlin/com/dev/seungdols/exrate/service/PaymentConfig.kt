@@ -7,6 +7,7 @@ import com.dev.seungdols.payment.service.ExRateProvider
 import com.dev.seungdols.payment.service.PaymentService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.client.RestTemplate
 import java.time.Clock
 
 @Configuration
@@ -27,8 +28,13 @@ class PaymentConfig {
   }
 
   @Bean
+  fun restTemplate(): RestTemplate {
+    return RestTemplate()
+  }
+
+  @Bean
   fun exRateProvider(): ExRateProvider {
-    return WebApiExRateProvider(apiTemplate())
+    return RestTemplateExRateProvider(restTemplate())
   }
 
   @Bean
