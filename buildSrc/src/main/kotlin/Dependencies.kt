@@ -23,6 +23,10 @@ object Dependencies {
 
   val springDoc = "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0"
 
+  val jpa = listOf(
+    "org.springframework.boot:spring-boot-starter-data-jpa",
+  )
+
   val kotlin = listOf(
     "org.jetbrains.kotlin:kotlin-reflect",
     "io.github.oshai:kotlin-logging-jvm:5.1.4"
