@@ -1,5 +1,7 @@
 package com.dev.seungdols.config
 
+import com.dev.seungdols.data.OrderRepository
+import jakarta.persistence.EntityManagerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
@@ -19,7 +21,7 @@ class DataConfig {
   }
 
   @Bean
-  fun localContainerEntityManagerFactoryBean(): LocalContainerEntityManagerFactoryBean {
+  fun entityManagerFactory(): LocalContainerEntityManagerFactoryBean {
     val emf = LocalContainerEntityManagerFactoryBean()
     emf.dataSource = dataSource()
     emf.setPackagesToScan("com.dev.seungdols")
@@ -30,5 +32,10 @@ class DataConfig {
         setShowSql(true)
       }
     return emf
+  }
+
+  @Bean
+  fun orderRepository(emf: EntityManagerFactory): OrderRepository {
+    return OrderRepository(emf)
   }
 }
