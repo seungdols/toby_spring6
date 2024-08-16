@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType
+import org.springframework.orm.jpa.JpaTransactionManager
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
+import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor
 import org.springframework.orm.jpa.vendor.Database
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import javax.sql.DataSource
@@ -35,7 +37,17 @@ class DataConfig {
   }
 
   @Bean
-  fun orderRepository(emf: EntityManagerFactory): OrderRepository {
-    return OrderRepository(emf)
+  fun persistenceAnnotationBeanPostProcessor(): PersistenceAnnotationBeanPostProcessor {
+    return PersistenceAnnotationBeanPostProcessor()
+  }
+
+  @Bean
+  fun transactionManager(emf: EntityManagerFactory): JpaTransactionManager {
+    return JpaTransactionManager(emf)
+  }
+
+  @Bean
+  fun orderRepository(): OrderRepository {
+    return OrderRepository()
   }
 }

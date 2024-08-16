@@ -1,30 +1,14 @@
 package com.dev.seungdols.data
 
 import com.dev.seungdols.order.Order
-import jakarta.persistence.EntityManagerFactory
+import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceContext
 
-class OrderRepository(
-  private val emf: EntityManagerFactory,
-) {
+class OrderRepository() {
+  @PersistenceContext
+  lateinit var entityManager: EntityManager
+
   fun save(order: Order) {
-    val entityManager = emf.createEntityManager()
-    val transaction = entityManager.transaction
-    transaction.begin()
-
-    try {
-      entityManager.persist(order)
-      entityManager.flush()
-
-      transaction.commit()
-    } catch (e: Exception) {
-      if (transaction.isActive) {
-        transaction.rollback()
-      }
-      throw e
-    } finally {
-      if (emf.isOpen) {
-        entityManager.close()
-      }
-    }
+    entityManager.persist(order)
   }
 }
