@@ -1,6 +1,5 @@
 package com.dev.seungdols.config
 
-import com.dev.seungdols.data.OrderRepository
 import jakarta.persistence.EntityManagerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -44,10 +43,5 @@ class DataConfig {
   @Bean
   fun transactionManager(emf: EntityManagerFactory): JpaTransactionManager {
     return JpaTransactionManager(emf)
-  }
-
-  @Bean
-  fun orderRepository(): OrderRepository {
-    return OrderRepository()
   }
 }
