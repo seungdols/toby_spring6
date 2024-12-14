@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    mapping-resources: META-INF/orm.xml
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+
+logging:
+  level:
+    org.hibernate: DEBUG
+    org.hibernate.type: TRACE

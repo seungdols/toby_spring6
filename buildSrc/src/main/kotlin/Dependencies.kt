@@ -2,7 +2,6 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object Dependencies {
   val spring = listOf(
-    "org.springframework.boot:spring-boot-starter-data-jpa",
     "org.springframework.boot:spring-boot-starter-data-redis",
     "org.springframework.boot:spring-boot-starter-web",
   )
@@ -19,7 +18,10 @@ object Dependencies {
 
   val mysql = "com.mysql:mysql-connector-j"
 
-  val queryDsl = "com.querydsl:querydsl-jpa:5.0.0:jakarta"
+  val queryDsl = listOf(
+    "com.querydsl:querydsl-jpa:5.0.0:jakarta",
+    "com.querydsl:querydsl-apt:5.0.0:jakarta",
+  )
 
   val springDoc = "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0"
 
@@ -29,7 +31,7 @@ object Dependencies {
 
   val kotlin = listOf(
     "org.jetbrains.kotlin:kotlin-reflect",
-    "io.github.oshai:kotlin-logging-jvm:5.1.4"
+    "io.github.oshai:kotlin-logging-jvm:5.1.4",
   )
 
   val jackson = listOf(

@@ -1,6 +1,7 @@
 package com.dev.seungdols.config
 
-import com.dev.seungdols.data.OrderRepository
+import com.dev.seungdols.data.JpaOrderRepository
+import com.dev.seungdols.order.OrderRepository
 import com.dev.seungdols.order.OrderService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,6 +18,6 @@ class OrderConfig {
 
   @Bean
   fun orderRepository(): OrderRepository {
-    return OrderRepository()
+    return JpaOrderRepository()
   }
 }
