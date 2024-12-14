@@ -10,6 +10,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor
 import org.springframework.orm.jpa.vendor.Database
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
+import org.springframework.transaction.PlatformTransactionManager
 import javax.sql.DataSource
 
 @Configuration
@@ -41,7 +42,7 @@ class DataConfig {
   }
 
   @Bean
-  fun transactionManager(emf: EntityManagerFactory): JpaTransactionManager {
+  fun transactionManager(emf: EntityManagerFactory): PlatformTransactionManager {
     return JpaTransactionManager(emf)
   }
 }
