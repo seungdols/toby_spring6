@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm" version="3.1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm
+                 https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd">
+
+  <entity class="com.dev.seungdols.order.Order" name="Order" access="FIELD">
+    <table name="ORDERS"/>
+    <attributes>
+      <id name="id">
+        <generated-value strategy="AUTO"/>
+      </id>
+      <basic name="no">
+        <column name="no" length="255"/>
+      </basic>
+      <basic name="totalAmount">
+        <column name="totalAmount" column-definition="number(38,2)"/>
+      </basic>
+    </attributes>
+  </entity>
+</entity-mappings>
