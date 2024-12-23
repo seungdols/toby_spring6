@@ -1,23 +1,27 @@
 package com.dev.seungdols.config
 
-import com.dev.seungdols.data.JpaOrderRepository
+import com.dev.seungdols.data.JdbcOrderRepository
 import com.dev.seungdols.order.OrderRepository
 import com.dev.seungdols.order.OrderService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
-import org.springframework.orm.jpa.JpaTransactionManager
+import org.springframework.transaction.PlatformTransactionManager
+import javax.sql.DataSource
 
 @Configuration
 @Import(DataConfig::class)
 class OrderConfig {
   @Bean
-  fun orderService(jpaTransactionManager: JpaTransactionManager): OrderService {
-    return OrderService(orderRepository(), jpaTransactionManager)
+  fun orderService(
+    orderRepository: OrderRepository,
+    transactionManager: PlatformTransactionManager,
+  ): OrderService {
+    return OrderService(orderRepository, transactionManager)
   }
 
   @Bean
-  fun orderRepository(): OrderRepository {
-    return JpaOrderRepository()
+  fun orderRepository(dataSource: DataSource): OrderRepository {
+    return JdbcOrderRepository(dataSource)
   }
 }
