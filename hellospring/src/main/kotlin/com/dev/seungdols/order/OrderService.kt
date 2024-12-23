@@ -16,10 +16,13 @@ class OrderService(
   ): Order {
     val order = Order(no = no, totalAmount = total)
 
-    TransactionTemplate(transactionManager).execute {
-      orderRepository.save(order)
-    }
-
+    this.orderRepository.save(order)
     return order
+  }
+
+  fun createOrders(orderRequests: List<OrderRequest>): List<Order> {
+    return TransactionTemplate(transactionManager).execute {
+      orderRequests.map { createOrder(it.no, it.totalAmount) }
+    } ?: emptyList()
   }
 }

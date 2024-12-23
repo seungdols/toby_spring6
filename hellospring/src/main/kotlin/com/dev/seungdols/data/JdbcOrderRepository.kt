@@ -31,12 +31,14 @@ class JdbcOrderRepository(
         """.trimIndent(),
       ).query(Long::class.java).single()
 
+    order.id = id
+
     jdbcClient.sql(
       """
-      insert into orders (id, no, totalAmount) values (?, ?, ?)
+      insert into orders (no,totalAmount,id) values (?,?,?)
       """.trimIndent(),
     )
-      .params(id, order.no, order.totalAmount)
+      .params(order.no, order.totalAmount, order.id)
       .update()
   }
 }
