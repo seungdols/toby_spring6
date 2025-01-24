@@ -3,6 +3,8 @@ package com.dev.seungdols.config
 import com.dev.seungdols.data.JdbcOrderRepository
 import com.dev.seungdols.order.OrderRepository
 import com.dev.seungdols.order.OrderService
+import com.dev.seungdols.order.OrderServiceImpl
+import com.dev.seungdols.order.OrderServiceTxProxy
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -14,10 +16,10 @@ import javax.sql.DataSource
 class OrderConfig {
   @Bean
   fun orderService(
-    orderRepository: OrderRepository,
     transactionManager: PlatformTransactionManager,
+    orderRepository: OrderRepository,
   ): OrderService {
-    return OrderService(orderRepository, transactionManager)
+    return OrderServiceTxProxy(OrderServiceImpl(orderRepository), transactionManager)
   }
 
   @Bean
